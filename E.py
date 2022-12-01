@@ -13,13 +13,16 @@ for r in range(n) :
 s = 0
 
 for coords in C.values() :
+    l = len(coords[0])
+    # We treat the X and Y coordinates of each color completely separately from each other
     for vals in coords :
-        l = len(vals)
+        # Here is an efficient way to compute sum(sum(abs(A[i]-A[j]) for i in range(l)) for j in range(i+1, l)) in O(nln(n)) :
         vals.sort()
-        cum_vals = [0]
+        cum_vals = [0]  # Cumulative sum of vals
         for i in range(l) :
             cum_vals.append(cum_vals[-1] + vals[i])
         
+        # The magic happens here :
         for i in range(l) :
             s += vals[i] * i - cum_vals[i]
 
